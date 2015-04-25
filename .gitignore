@@ -1,0 +1,5 @@
+.*
+*~
+/ct-submit
+!.git*
+!.mailmap
