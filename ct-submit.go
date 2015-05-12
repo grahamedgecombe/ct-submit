@@ -99,7 +99,7 @@ func (sct signedCertificateTimestamp) Write(w io.Writer) error {
 func main() {
 	// parse args
 	if len(os.Args) != 2 {
-		fmt.Fprintf(os.Stderr, `usage: ct-submit [-v] <log server>
+		fmt.Fprintf(os.Stderr, `usage: ct-submit <log server>
 
 ct-submit reads a PEM-encoded X.509 certificate chain from stdin and submits it
 to the given Certificate Transparency log server. The Signed Certificate
