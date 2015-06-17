@@ -150,7 +150,9 @@ The signature of the SCT is not verified.
 	}
 
 	if response.StatusCode != http.StatusOK {
-		panic(fmt.Errorf("unexpected status %s from log server", response.Status))
+		fmt.Fprintf(os.Stderr, "Unexpected status %s from log server:\n\n", response.Status)
+		io.Copy(os.Stderr, response.Body)
+		os.Exit(1)
 	}
 
 	// decode JSON SCT structure
