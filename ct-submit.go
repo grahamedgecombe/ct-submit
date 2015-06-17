@@ -150,7 +150,7 @@ The signature of the SCT is not verified.
 	}
 
 	if response.StatusCode != http.StatusOK {
-		fmt.Fprintf(os.Stderr, "Unexpected status %s from log server:\n\n", response.Status)
+		fmt.Fprintf(os.Stderr, "unexpected status %s from log server:\n\n", response.Status)
 		io.Copy(os.Stderr, response.Body)
 		os.Exit(1)
 	}
