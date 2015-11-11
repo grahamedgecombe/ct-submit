@@ -16,6 +16,7 @@ package main
 
 import (
 	"bytes"
+	_ "crypto/sha512"
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
