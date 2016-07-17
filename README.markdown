@@ -17,10 +17,11 @@ Building
 Usage
 -----
 
-`ct-submit` takes a single argument - the URL of the log server (without the
-leading `https://`). It reads the certificate chain in PEM format from `stdin`.
-The leaf certificate should be the first certificate in the chain, followed by
-any intermediate certificates and, optionally, the root certificate.
+`ct-submit` takes a single argument - the URL of the log server. If the scheme
+is not specified it defaults to `https://`. It reads the certificate chain in
+PEM format from `stdin`.  The leaf certificate should be the first certificate
+in the chain, followed by any intermediate certificates and, optionally, the
+root certificate.
 
 The encoded SCT structure is written in binary to `stdout`.
 
