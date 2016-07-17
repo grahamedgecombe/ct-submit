@@ -26,6 +26,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 )
 
@@ -138,14 +139,29 @@ The signature of the SCT is not verified.
 		msg.Chain = append(msg.Chain, base64.StdEncoding.EncodeToString(block.Bytes))
 	}
 
-	// send add-chain message to the log
+	// construct add-chain message
 	payload, err := json.Marshal(msg)
 	if err != nil {
 		panic(err)
 	}
 
-	url := "https://" + logServer + "/ct/v1/add-chain"
-	response, err := http.Post(url, "application/json", bytes.NewReader(payload))
+	// construct add-chain URL
+	addChainUrl, err := url.Parse(logServer)
+	if err != nil {
+		panic(err)
+	}
+
+	addChainUrl, err = addChainUrl.Parse("/ct/v1/add-chain")
+	if err != nil {
+		panic(err)
+	}
+
+	if addChainUrl.Scheme == "" {
+		addChainUrl.Scheme = "https"
+	}
+
+	// send add-chain message to the log
+	response, err := http.Post(addChainUrl.String(), "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)
 	}
