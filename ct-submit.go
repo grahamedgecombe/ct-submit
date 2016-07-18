@@ -28,6 +28,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 type addChain struct {
@@ -146,22 +147,22 @@ The signature of the SCT is not verified.
 	}
 
 	// construct add-chain URL
-	addChainUrl, err := url.Parse(logServer)
+	if !strings.Contains(logServer, "://") {
+		logServer = "https://" + logServer
+	}
+
+	addChainURL, err := url.Parse(logServer)
 	if err != nil {
 		panic(err)
 	}
 
-	addChainUrl, err = addChainUrl.Parse("/ct/v1/add-chain")
+	addChainURL, err = addChainURL.Parse("ct/v1/add-chain")
 	if err != nil {
 		panic(err)
-	}
-
-	if addChainUrl.Scheme == "" {
-		addChainUrl.Scheme = "https"
 	}
 
 	// send add-chain message to the log
-	response, err := http.Post(addChainUrl.String(), "application/json", bytes.NewReader(payload))
+	response, err := http.Post(addChainURL.String(), "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)
 	}
