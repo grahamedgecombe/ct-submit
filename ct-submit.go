@@ -151,6 +151,10 @@ The signature of the SCT is not verified.
 		logServer = "https://" + logServer
 	}
 
+	if !strings.HasSuffix(logServer, "/") {
+		logServer = logServer + "/"
+	}
+
 	addChainURL, err := url.Parse(logServer)
 	if err != nil {
 		panic(err)
